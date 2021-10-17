@@ -11,6 +11,8 @@ try {
     DB_PASS,
     [
       PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+      PDO::ATTR_EMULATE_PREPARES => false,
     ]
   );
 } catch (PDOException $e) {
@@ -18,6 +20,16 @@ try {
   exit;
 }
 
+function getTodos($pdo)
+{
+  $stmt = $pdo->query("Select * From todos Order By id Desc");
+  $todos = $stmt->fetchAll();
+  return $todos;
+}
+
+$todos = getTodos($pdo);
+var_dump($todos);
+exit;
 ?>
 <!DOCTYPE html>
 <html lang="ja">
