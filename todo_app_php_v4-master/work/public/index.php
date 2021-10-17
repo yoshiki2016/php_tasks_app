@@ -24,12 +24,27 @@ function h($str)
 {
   return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
+function addTodos($pdo)
+{
+  $title = trim(filter_input(INPUT_POST, 'title'));
+  if ($title === '') {
+    return;
+  }
+
+  $stmt = $pdo->prepare("INSERT INTO todos (title) VALUES (:title)");
+  $stmt->bindValue('title', $title, PDO::PARAM_STR);
+  $stmt->execute();
+}
 
 function getTodos($pdo)
 {
   $stmt = $pdo->query("Select * From todos Order By id Desc");
   $todos = $stmt->fetchAll();
   return $todos;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+  addTodos($pdo);
 }
 
 $todos = getTodos($pdo);
@@ -43,6 +58,11 @@ $todos = getTodos($pdo);
   </head>
   <body>
     <h1>Todos</h1>
+
+    <form action="" method="post">
+      <input type="text" name="title" placeholder="Type new todo.">
+    </form>
+
     <ul>
       <?php foreach ($todos as $todo): ?>
         <li>
