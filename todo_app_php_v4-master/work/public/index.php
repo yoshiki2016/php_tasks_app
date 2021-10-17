@@ -20,6 +20,11 @@ try {
   exit;
 }
 
+function h($str)
+{
+  return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+}
+
 function getTodos($pdo)
 {
   $stmt = $pdo->query("Select * From todos Order By id Desc");
@@ -28,8 +33,6 @@ function getTodos($pdo)
 }
 
 $todos = getTodos($pdo);
-var_dump($todos);
-exit;
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -41,18 +44,14 @@ exit;
   <body>
     <h1>Todos</h1>
     <ul>
-      <li>
-        <input type="checkbox" checked>
-        <span>Title</span>
-      </li>
-      <li>
-        <input type="checkbox" checked>
-        <span class="done">Title</span>
-      </li>
-      <li>
-        <input type="checkbox" checked>
-        <span>Title</span>
-      </li>
+      <?php foreach ($todos as $todo): ?>
+        <li>
+          <input type="checkbox" <?= $todo->is_done ? 'checked' : ''; ?>>
+          <span class="<?= $todo->is_done ? 'done' : ''; ?>">
+            <?= h($todo->title); ?>
+          </span>
+        </li>
+      <?php endforeach; ?>
     </ul>
   </body>
 </html>
