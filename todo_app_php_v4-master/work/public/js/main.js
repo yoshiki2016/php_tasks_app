@@ -7,4 +7,14 @@
       checkbox.parentNode.submit();
     });
   });
+
+  const deletes = document.querySelectorAll('.delete');
+  deletes.forEach(span => {
+    span.addEventListener('click', () => {
+      if (!confirm('Are you sure?')) {
+        return;
+      }
+      span.parentNode.submit();
+    });
+  });
 }

@@ -45,6 +45,19 @@ function toggleTodos($pdo)
   $stmt->bindValue('id', $id, PDO::PARAM_INT);
   $stmt->execute();
 }
+
+function deleteTodos($pdo)
+{
+  $id = filter_input(INPUT_POST, 'id');
+  if ( empty( $id ) ) {
+    return;
+  }
+
+  $stmt = $pdo->prepare("Delete From todos Where id = :id");
+  $stmt->bindValue('id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+}
+
 function getTodos($pdo)
 {
   $stmt = $pdo->query("Select * From todos Order By id Desc");
