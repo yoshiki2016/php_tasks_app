@@ -34,6 +34,17 @@ function addTodos($pdo)
   $stmt->execute();
 }
 
+function toggleTodos($pdo)
+{
+  $id = filter_input(INPUT_POST, 'id');
+  if ( empty( $id ) ) {
+    return;
+  }
+
+  $stmt = $pdo->prepare("Update todos Set is_done = Not is_done Where id = :id");
+  $stmt->bindValue('id', $id, PDO::PARAM_INT);
+  $stmt->execute();
+}
 function getTodos($pdo)
 {
   $stmt = $pdo->query("Select * From todos Order By id Desc");
