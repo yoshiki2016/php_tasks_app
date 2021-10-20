@@ -34,7 +34,11 @@ $todos = getTodos($pdo);
     <ul>
       <?php foreach ($todos as $todo): ?>
         <li>
-          <input type="checkbox" <?= $todo->is_done ? 'checked' : ''; ?>>
+          <form action="" method="POST">
+            <input type="checkbox" <?= $todo->is_done ? 'checked' : ''; ?>>
+            <input type="hidden" name="id" value="<?= h($todo->id); ?>">
+            <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+          </form>
           <span class="<?= $todo->is_done ? 'done' : ''; ?>">
             <?= h($todo->title); ?>
           </span>
