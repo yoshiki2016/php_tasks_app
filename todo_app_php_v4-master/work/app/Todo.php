@@ -1,5 +1,8 @@
 <?php
 
+namespace MyApp;
+use MyApp\Token;
+
 class Todo
 {
   private $pdo;
@@ -48,7 +51,7 @@ class Todo
     }
 
     $stmt = $this->pdo->prepare("INSERT INTO todos (title) VALUES (:title)");
-    $stmt->bindValue('title', $title, PDO::PARAM_STR);
+    $stmt->bindValue('title', $title, \PDO::PARAM_STR);
     $stmt->execute();
   }
 
@@ -60,7 +63,7 @@ class Todo
     }
 
     $stmt = $this->pdo->prepare("Update todos Set is_done = Not is_done Where id = :id");
-    $stmt->bindValue('id', $id, PDO::PARAM_INT);
+    $stmt->bindValue('id', $id, \PDO::PARAM_INT);
     $stmt->execute();
   }
 
@@ -72,7 +75,7 @@ class Todo
     }
 
     $stmt = $this->pdo->prepare("Delete From todos Where id = :id");
-    $stmt->bindValue('id', $id, PDO::PARAM_INT);
+    $stmt->bindValue('id', $id, \PDO::PARAM_INT);
     $stmt->execute();
   }
 
