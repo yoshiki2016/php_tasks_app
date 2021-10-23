@@ -21,7 +21,7 @@ class Database
         return self::$instance;
       }
     } catch (PDOException $e) {
-      echo $e->getMesage();
+      echo $e->getMessage();
       exit;
     }
   }
